@@ -14,10 +14,20 @@ struct PingResponse {
 /** student class  **/
 struct StudentClassCreateRequest {
 	1:            string    classNumber    
-	255: optional base.Base Base
+	255: optional base.Base Base           
 }
 
 struct StudentClassCreateResponse {
+	255: optional base.BaseResp BaseResp    
+}
+
+struct StudentClassEditRequest {
+	1:   required i64       id             
+	2:            string    classNumber    
+	255: optional base.Base Base           
+}
+
+struct StudentClassEditResponse {
 	255: optional base.BaseResp BaseResp    
 }
 
@@ -27,4 +37,5 @@ service TeachingEvaluationService {
     
     /** student class  **/
     StudentClassCreateResponse CreateStudentClass(1: StudentClassCreateRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/class/create")
+    StudentClassEditResponse EditStudentClass(1: StudentClassEditRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/class/edit")
 }

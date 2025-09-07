@@ -11,7 +11,7 @@ import (
 
 func CreateStudentClass(ctx context.Context, req *eva.StudentClassCreateRequest) (*eva.StudentClassCreateResponse, error) {
 
-	if err := checkParam(req.ClassNumber); err != nil {
+	if err := CheckClassParam(req.ClassNumber); err != nil {
 		return nil, err
 	}
 
@@ -31,7 +31,7 @@ func CreateStudentClass(ctx context.Context, req *eva.StudentClassCreateRequest)
 	}, nil
 }
 
-func checkParam(classNumber string) error {
+func CheckClassParam(classNumber string) error {
 	if classNumber == "" {
 		return fmt.Errorf("class number is required")
 	}

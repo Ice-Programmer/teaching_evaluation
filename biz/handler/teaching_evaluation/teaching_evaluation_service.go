@@ -37,9 +37,8 @@ func Ping(ctx context.Context, c *app.RequestContext) {
 // CreateStudentClass .
 // @router /api/v1/itmo/teaching/evaluation/student/class/create [POST]
 func CreateStudentClass(ctx context.Context, c *app.RequestContext) {
-	var err error
 	var req teaching_evaluation.StudentClassCreateRequest
-	err = c.BindAndValidate(&req)
+	err := c.BindAndValidate(&req)
 	if err != nil {
 		hlog.CtxErrorf(ctx, "参数错误: %v", err)
 		c.String(consts.StatusBadRequest, err.Error())
@@ -51,6 +50,27 @@ func CreateStudentClass(ctx context.Context, c *app.RequestContext) {
 		hlog.CtxErrorf(ctx, "CreateStudentClass error: %s", err.Error())
 		resp = &teaching_evaluation.StudentClassCreateResponse{
 			BaseResp: handler.GenErrorBaseResp(fmt.Sprintf("create student class error, err: %v", err)),
+		}
+	}
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// EditStudentClass .
+// @router /api/v1/itmo/teaching/evaluation/student/class/edit [POST]
+func EditStudentClass(ctx context.Context, c *app.RequestContext) {
+	var req teaching_evaluation.StudentClassEditRequest
+	err := c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp, err := student_class.EditStudentClass(ctx, &req)
+	if err != nil {
+		hlog.CtxErrorf(ctx, "EditStudentClass error: %s", err.Error())
+		resp = &teaching_evaluation.StudentClassEditResponse{
+			BaseResp: handler.GenErrorBaseResp(fmt.Sprintf("edit student class error, err: %v", err)),
 		}
 	}
 

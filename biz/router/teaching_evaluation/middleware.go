@@ -55,3 +55,8 @@ func _createstudentclassMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _editstudentclassMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
