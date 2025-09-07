@@ -28,6 +28,13 @@ func Register(r *server.Hertz) {
 					{
 						_evaluation := _teaching.Group("/evaluation", _evaluationMw()...)
 						_evaluation.POST("/ping", append(_pingMw(), teaching_evaluation.Ping)...)
+						{
+							_student := _evaluation.Group("/student", _studentMw()...)
+							{
+								_class := _student.Group("/class", _classMw()...)
+								_class.POST("/create", append(_createstudentclassMw(), teaching_evaluation.CreateStudentClass)...)
+							}
+						}
 					}
 				}
 			}

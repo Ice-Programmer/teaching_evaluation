@@ -4,29 +4,54 @@ package teaching_evaluation
 
 import (
 	"context"
-	"log/slog"
-	"teaching_evaluation_backend/biz/handler"
+	"fmt"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"teaching_evaluation_backend/handler"
+	"teaching_evaluation_backend/handler/student_class"
 	"teaching_evaluation_backend/utils"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	eva "teaching_evaluation_backend/biz/model/teaching_evaluation"
+	"teaching_evaluation_backend/biz/model/teaching_evaluation"
 )
 
 // Ping .
 // @router /api/v1/itmo/teaching/evaluation/ping [POST]
 func Ping(ctx context.Context, c *app.RequestContext) {
-	slog.InfoContext(ctx, "received ping request")
-	var req eva.PingRequest
+	hlog.CtxInfof(ctx, "received ping request")
+	var req teaching_evaluation.PingRequest
 	err := c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
 
-	resp := &eva.PingResponse{
+	resp := &teaching_evaluation.PingResponse{
 		BaseResp: handler.ConstructSuccessResp(),
 		Response: utils.StringPtr("pong"),
+	}
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// CreateStudentClass .
+// @router /api/v1/itmo/teaching/evaluation/student/class/create [POST]
+func CreateStudentClass(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req teaching_evaluation.StudentClassCreateRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		hlog.CtxErrorf(ctx, "参数错误: %v", err)
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp, err := student_class.CreateStudentClass(ctx, &req)
+	if err != nil {
+		hlog.CtxErrorf(ctx, "CreateStudentClass error: %s", err.Error())
+		resp = &teaching_evaluation.StudentClassCreateResponse{
+			BaseResp: handler.GenErrorBaseResp(fmt.Sprintf("create student class error, err: %v", err)),
+		}
 	}
 
 	c.JSON(consts.StatusOK, resp)

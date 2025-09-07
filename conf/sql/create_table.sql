@@ -7,10 +7,11 @@ USE teaching_evaluation;
 -- 班级表
 CREATE TABLE IF NOT EXISTS student_class
 (
-    id         BIGINT AUTO_INCREMENT COMMENT 'id' PRIMARY KEY,
-    class_name VARCHAR(128)      NOT NULL COMMENT '班级名称',
-    create_at  BIGINT  DEFAULT 0 NOT NULL COMMENT '创建时间',
-    is_delete  TINYINT DEFAULT 0 NOT NULL COMMENT '是否删除',
+    id           BIGINT AUTO_INCREMENT COMMENT 'id' PRIMARY KEY,
+    class_number varchar(128)      not null comment '班级编号',
+    class_name   VARCHAR(128)      NOT NULL COMMENT '班级名称',
+    create_at    BIGINT  DEFAULT 0 NOT NULL COMMENT '创建时间',
+    is_delete    TINYINT DEFAULT 0 NOT NULL COMMENT '是否删除',
     INDEX idx_class_name (class_name)
 ) COMMENT '班级表' CHARSET = utf8mb4
                    COLLATE = utf8mb4_unicode_ci;

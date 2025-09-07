@@ -40,3 +40,18 @@ func _pingMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _studentMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _classMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _createstudentclassMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
