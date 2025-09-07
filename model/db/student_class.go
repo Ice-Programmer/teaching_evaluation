@@ -64,7 +64,23 @@ func UpdateClass(ctx context.Context, db *gorm.DB, studentClass *StudentClass) e
 	return nil
 }
 
-func FindClassListByNumber(ctx context.Context, db *gorm.DB, numberList []string) ([]*StudentClass, error) {
+func FindClassByNumber(ctx context.Context, db *gorm.DB, number string) (*StudentClass, error) {
+	if db == nil {
+		db = DB
+	}
+	var studentClass StudentClass
+	err := db.Table(StudentClassTableName).WithContext(ctx).
+		Where("class_number = ? and is_delete = 0", number).
+		First(&studentClass).Error
+
+	if err != nil {
+		hlog.CtxErrorf(ctx, "FindClassByNumber db failed: %v", err)
+		return nil, err
+	}
+	return &studentClass, nil
+}
+
+func FindClassListByNumberList(ctx context.Context, db *gorm.DB, numberList []string) ([]*StudentClass, error) {
 	if db == nil {
 		db = DB
 	}
@@ -75,7 +91,7 @@ func FindClassListByNumber(ctx context.Context, db *gorm.DB, numberList []string
 		Find(&studentClassList).Error
 
 	if err != nil {
-		hlog.CtxErrorf(ctx, "FindClassListByNumber db failed: %v", err)
+		hlog.CtxErrorf(ctx, "FindClassListByNumberList db failed: %v", err)
 		return nil, err
 	}
 	return studentClassList, nil

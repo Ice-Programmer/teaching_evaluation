@@ -70,3 +70,8 @@ func _batchcreatestudentclassMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _createstudentMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

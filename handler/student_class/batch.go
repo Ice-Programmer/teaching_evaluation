@@ -55,7 +55,7 @@ func CheckBatchClassList(ctx context.Context, classNumberList []string) error {
 		}
 	}
 
-	studentClasses, err := db.FindClassListByNumber(ctx, db.DB, classNumberList)
+	studentClasses, err := db.FindClassListByNumberList(ctx, db.DB, classNumberList)
 	if err != nil {
 		return err
 	}

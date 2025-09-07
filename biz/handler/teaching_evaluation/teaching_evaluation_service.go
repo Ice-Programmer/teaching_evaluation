@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"teaching_evaluation_backend/handler"
+	"teaching_evaluation_backend/handler/student"
 	"teaching_evaluation_backend/handler/student_class"
 	"teaching_evaluation_backend/utils"
 
@@ -91,7 +92,28 @@ func BatchCreateStudentClass(ctx context.Context, c *app.RequestContext) {
 	if err != nil {
 		hlog.CtxErrorf(ctx, "Batch Create Student error: %s", err.Error())
 		resp = &teaching_evaluation.BatchCreateStudentResponse{
-			BaseResp: handler.GenErrorBaseResp(fmt.Sprintf("edit student class error, err: %v", err)),
+			BaseResp: handler.GenErrorBaseResp(fmt.Sprintf("batch create student class error, err: %v", err)),
+		}
+	}
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// CreateStudent .
+// @router /api/v1/itmo/teaching/evaluation/student/create [POST]
+func CreateStudent(ctx context.Context, c *app.RequestContext) {
+	var req teaching_evaluation.CreateStudentRequest
+	err := c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp, err := student.CreateStudent(ctx, &req)
+	if err != nil {
+		hlog.CtxErrorf(ctx, "CreateStudent error: %s", err.Error())
+		resp = &teaching_evaluation.CreateStudentResponse{
+			BaseResp: handler.GenErrorBaseResp(fmt.Sprintf("create student error, err: %v", err)),
 		}
 	}
 
