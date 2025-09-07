@@ -60,3 +60,13 @@ func _editstudentclassMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _createMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _batchcreatestudentclassMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

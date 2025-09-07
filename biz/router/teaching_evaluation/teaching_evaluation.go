@@ -33,6 +33,8 @@ func Register(r *server.Hertz) {
 							{
 								_class := _student.Group("/class", _classMw()...)
 								_class.POST("/create", append(_createstudentclassMw(), teaching_evaluation.CreateStudentClass)...)
+								_create := _class.Group("/create", _createMw()...)
+								_create.POST("/batch", append(_batchcreatestudentclassMw(), teaching_evaluation.BatchCreateStudentClass)...)
 								_class.POST("/edit", append(_editstudentclassMw(), teaching_evaluation.EditStudentClass)...)
 							}
 						}

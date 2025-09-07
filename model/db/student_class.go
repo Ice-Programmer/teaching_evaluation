@@ -63,3 +63,32 @@ func UpdateClass(ctx context.Context, db *gorm.DB, studentClass *StudentClass) e
 	}
 	return nil
 }
+
+func FindClassListByNumber(ctx context.Context, db *gorm.DB, numberList []string) ([]*StudentClass, error) {
+	if db == nil {
+		db = DB
+	}
+
+	var studentClassList []*StudentClass
+	err := db.Table(StudentClassTableName).WithContext(ctx).
+		Where("class_number in (?) and is_delete = 0", numberList).
+		Find(&studentClassList).Error
+
+	if err != nil {
+		hlog.CtxErrorf(ctx, "FindClassListByNumber db failed: %v", err)
+		return nil, err
+	}
+	return studentClassList, nil
+}
+
+func BatchCreateListByNumber(ctx context.Context, db *gorm.DB, studentClassList []*StudentClass) error {
+	if db == nil {
+		db = DB
+	}
+
+	if err := db.Table(StudentClassTableName).WithContext(ctx).Create(studentClassList).Error; err != nil {
+		hlog.CtxErrorf(ctx, "BatchCreateListByNumber db failed: %v", err)
+		return err
+	}
+	return nil
+}
