@@ -10,7 +10,7 @@ import (
 	"teaching_evaluation_backend/utils"
 )
 
-func BatchCreateStudentClass(ctx context.Context, req *eva.BatchCreateStudentRequest) (*eva.BatchCreateStudentResponse, error) {
+func BatchCreateStudentClass(ctx context.Context, req *eva.BatchCreateStudentClassRequest) (*eva.BatchCreateStudentClassResponse, error) {
 	if err := CheckBatchClassList(ctx, req.ClassNumberList); err != nil {
 		hlog.CtxErrorf(ctx, "CheckBatchClassList Precheck error: %s", err.Error())
 		return nil, err
@@ -31,7 +31,7 @@ func BatchCreateStudentClass(ctx context.Context, req *eva.BatchCreateStudentReq
 		return nil, err
 	}
 
-	return &eva.BatchCreateStudentResponse{
+	return &eva.BatchCreateStudentClassResponse{
 		Num:      int32(len(numberClassList)),
 		BaseResp: handler.ConstructSuccessResp(),
 	}, nil

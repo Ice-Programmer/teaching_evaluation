@@ -11,6 +11,7 @@ import (
 	"teaching_evaluation_backend/biz/model/base"
 )
 
+/** student  **/
 type Major int64
 
 const (
@@ -1222,41 +1223,41 @@ func (p *StudentClassEditResponse) String() string {
 
 }
 
-type BatchCreateStudentRequest struct {
+type BatchCreateStudentClassRequest struct {
 	ClassNumberList []string   `thrift:"classNumberList,1" form:"classNumberList" json:"classNumberList" query:"classNumberList"`
 	Base            *base.Base `thrift:"Base,255,optional" form:"Base" json:"Base,omitempty" query:"Base"`
 }
 
-func NewBatchCreateStudentRequest() *BatchCreateStudentRequest {
-	return &BatchCreateStudentRequest{}
+func NewBatchCreateStudentClassRequest() *BatchCreateStudentClassRequest {
+	return &BatchCreateStudentClassRequest{}
 }
 
-func (p *BatchCreateStudentRequest) InitDefault() {
+func (p *BatchCreateStudentClassRequest) InitDefault() {
 }
 
-func (p *BatchCreateStudentRequest) GetClassNumberList() (v []string) {
+func (p *BatchCreateStudentClassRequest) GetClassNumberList() (v []string) {
 	return p.ClassNumberList
 }
 
-var BatchCreateStudentRequest_Base_DEFAULT *base.Base
+var BatchCreateStudentClassRequest_Base_DEFAULT *base.Base
 
-func (p *BatchCreateStudentRequest) GetBase() (v *base.Base) {
+func (p *BatchCreateStudentClassRequest) GetBase() (v *base.Base) {
 	if !p.IsSetBase() {
-		return BatchCreateStudentRequest_Base_DEFAULT
+		return BatchCreateStudentClassRequest_Base_DEFAULT
 	}
 	return p.Base
 }
 
-var fieldIDToName_BatchCreateStudentRequest = map[int16]string{
+var fieldIDToName_BatchCreateStudentClassRequest = map[int16]string{
 	1:   "classNumberList",
 	255: "Base",
 }
 
-func (p *BatchCreateStudentRequest) IsSetBase() bool {
+func (p *BatchCreateStudentClassRequest) IsSetBase() bool {
 	return p.Base != nil
 }
 
-func (p *BatchCreateStudentRequest) Read(iprot thrift.TProtocol) (err error) {
+func (p *BatchCreateStudentClassRequest) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 
@@ -1309,7 +1310,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BatchCreateStudentRequest[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BatchCreateStudentClassRequest[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1319,7 +1320,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *BatchCreateStudentRequest) ReadField1(iprot thrift.TProtocol) error {
+func (p *BatchCreateStudentClassRequest) ReadField1(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
 		return err
@@ -1342,7 +1343,7 @@ func (p *BatchCreateStudentRequest) ReadField1(iprot thrift.TProtocol) error {
 	p.ClassNumberList = _field
 	return nil
 }
-func (p *BatchCreateStudentRequest) ReadField255(iprot thrift.TProtocol) error {
+func (p *BatchCreateStudentClassRequest) ReadField255(iprot thrift.TProtocol) error {
 	_field := base.NewBase()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -1351,9 +1352,9 @@ func (p *BatchCreateStudentRequest) ReadField255(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *BatchCreateStudentRequest) Write(oprot thrift.TProtocol) (err error) {
+func (p *BatchCreateStudentClassRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("BatchCreateStudentRequest"); err != nil {
+	if err = oprot.WriteStructBegin("BatchCreateStudentClassRequest"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -1383,7 +1384,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *BatchCreateStudentRequest) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *BatchCreateStudentClassRequest) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("classNumberList", thrift.LIST, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -1407,7 +1408,7 @@ WriteFieldBeginError:
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
-func (p *BatchCreateStudentRequest) writeField255(oprot thrift.TProtocol) (err error) {
+func (p *BatchCreateStudentClassRequest) writeField255(oprot thrift.TProtocol) (err error) {
 	if p.IsSetBase() {
 		if err = oprot.WriteFieldBegin("Base", thrift.STRUCT, 255); err != nil {
 			goto WriteFieldBeginError
@@ -1426,49 +1427,49 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 255 end error: ", p), err)
 }
 
-func (p *BatchCreateStudentRequest) String() string {
+func (p *BatchCreateStudentClassRequest) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("BatchCreateStudentRequest(%+v)", *p)
+	return fmt.Sprintf("BatchCreateStudentClassRequest(%+v)", *p)
 
 }
 
-type BatchCreateStudentResponse struct {
+type BatchCreateStudentClassResponse struct {
 	Num      int32          `thrift:"num,1" form:"num" json:"num" query:"num"`
 	BaseResp *base.BaseResp `thrift:"BaseResp,255,optional" form:"BaseResp" json:"BaseResp,omitempty" query:"BaseResp"`
 }
 
-func NewBatchCreateStudentResponse() *BatchCreateStudentResponse {
-	return &BatchCreateStudentResponse{}
+func NewBatchCreateStudentClassResponse() *BatchCreateStudentClassResponse {
+	return &BatchCreateStudentClassResponse{}
 }
 
-func (p *BatchCreateStudentResponse) InitDefault() {
+func (p *BatchCreateStudentClassResponse) InitDefault() {
 }
 
-func (p *BatchCreateStudentResponse) GetNum() (v int32) {
+func (p *BatchCreateStudentClassResponse) GetNum() (v int32) {
 	return p.Num
 }
 
-var BatchCreateStudentResponse_BaseResp_DEFAULT *base.BaseResp
+var BatchCreateStudentClassResponse_BaseResp_DEFAULT *base.BaseResp
 
-func (p *BatchCreateStudentResponse) GetBaseResp() (v *base.BaseResp) {
+func (p *BatchCreateStudentClassResponse) GetBaseResp() (v *base.BaseResp) {
 	if !p.IsSetBaseResp() {
-		return BatchCreateStudentResponse_BaseResp_DEFAULT
+		return BatchCreateStudentClassResponse_BaseResp_DEFAULT
 	}
 	return p.BaseResp
 }
 
-var fieldIDToName_BatchCreateStudentResponse = map[int16]string{
+var fieldIDToName_BatchCreateStudentClassResponse = map[int16]string{
 	1:   "num",
 	255: "BaseResp",
 }
 
-func (p *BatchCreateStudentResponse) IsSetBaseResp() bool {
+func (p *BatchCreateStudentClassResponse) IsSetBaseResp() bool {
 	return p.BaseResp != nil
 }
 
-func (p *BatchCreateStudentResponse) Read(iprot thrift.TProtocol) (err error) {
+func (p *BatchCreateStudentClassResponse) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 
@@ -1521,7 +1522,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BatchCreateStudentResponse[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BatchCreateStudentClassResponse[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1531,7 +1532,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *BatchCreateStudentResponse) ReadField1(iprot thrift.TProtocol) error {
+func (p *BatchCreateStudentClassResponse) ReadField1(iprot thrift.TProtocol) error {
 
 	var _field int32
 	if v, err := iprot.ReadI32(); err != nil {
@@ -1542,7 +1543,7 @@ func (p *BatchCreateStudentResponse) ReadField1(iprot thrift.TProtocol) error {
 	p.Num = _field
 	return nil
 }
-func (p *BatchCreateStudentResponse) ReadField255(iprot thrift.TProtocol) error {
+func (p *BatchCreateStudentClassResponse) ReadField255(iprot thrift.TProtocol) error {
 	_field := base.NewBaseResp()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -1551,9 +1552,9 @@ func (p *BatchCreateStudentResponse) ReadField255(iprot thrift.TProtocol) error 
 	return nil
 }
 
-func (p *BatchCreateStudentResponse) Write(oprot thrift.TProtocol) (err error) {
+func (p *BatchCreateStudentClassResponse) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("BatchCreateStudentResponse"); err != nil {
+	if err = oprot.WriteStructBegin("BatchCreateStudentClassResponse"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -1583,7 +1584,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *BatchCreateStudentResponse) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *BatchCreateStudentClassResponse) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("num", thrift.I32, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -1599,7 +1600,7 @@ WriteFieldBeginError:
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
-func (p *BatchCreateStudentResponse) writeField255(oprot thrift.TProtocol) (err error) {
+func (p *BatchCreateStudentClassResponse) writeField255(oprot thrift.TProtocol) (err error) {
 	if p.IsSetBaseResp() {
 		if err = oprot.WriteFieldBegin("BaseResp", thrift.STRUCT, 255); err != nil {
 			goto WriteFieldBeginError
@@ -1618,15 +1619,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 255 end error: ", p), err)
 }
 
-func (p *BatchCreateStudentResponse) String() string {
+func (p *BatchCreateStudentClassResponse) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("BatchCreateStudentResponse(%+v)", *p)
+	return fmt.Sprintf("BatchCreateStudentClassResponse(%+v)", *p)
 
 }
 
-/** student  **/
 type CreateStudentRequest struct {
 	StudentNumber string     `thrift:"studentNumber,1" form:"studentNumber" json:"studentNumber" query:"studentNumber"`
 	StudentName   string     `thrift:"studentName,2" form:"studentName" json:"studentName" query:"studentName"`
@@ -2243,7 +2243,7 @@ type TeachingEvaluationService interface {
 
 	EditStudentClass(ctx context.Context, req *StudentClassEditRequest) (r *StudentClassEditResponse, err error)
 
-	BatchCreateStudentClass(ctx context.Context, req *BatchCreateStudentRequest) (r *BatchCreateStudentResponse, err error)
+	BatchCreateStudentClass(ctx context.Context, req *BatchCreateStudentClassRequest) (r *BatchCreateStudentClassResponse, err error)
 	/** student   **/
 	CreateStudent(ctx context.Context, req *CreateStudentRequest) (r *CreateStudentResponse, err error)
 }
@@ -2301,7 +2301,7 @@ func (p *TeachingEvaluationServiceClient) EditStudentClass(ctx context.Context, 
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *TeachingEvaluationServiceClient) BatchCreateStudentClass(ctx context.Context, req *BatchCreateStudentRequest) (r *BatchCreateStudentResponse, err error) {
+func (p *TeachingEvaluationServiceClient) BatchCreateStudentClass(ctx context.Context, req *BatchCreateStudentClassRequest) (r *BatchCreateStudentClassResponse, err error) {
 	var _args TeachingEvaluationServiceBatchCreateStudentClassArgs
 	_args.Req = req
 	var _result TeachingEvaluationServiceBatchCreateStudentClassResult
@@ -2528,7 +2528,7 @@ func (p *teachingEvaluationServiceProcessorBatchCreateStudentClass) Process(ctx 
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := TeachingEvaluationServiceBatchCreateStudentClassResult{}
-	var retval *BatchCreateStudentResponse
+	var retval *BatchCreateStudentClassResponse
 	if retval, err2 = p.handler.BatchCreateStudentClass(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing BatchCreateStudentClass: "+err2.Error())
 		oprot.WriteMessageBegin("BatchCreateStudentClass", thrift.EXCEPTION, seqId)
@@ -3482,7 +3482,7 @@ func (p *TeachingEvaluationServiceEditStudentClassResult) String() string {
 }
 
 type TeachingEvaluationServiceBatchCreateStudentClassArgs struct {
-	Req *BatchCreateStudentRequest `thrift:"req,1"`
+	Req *BatchCreateStudentClassRequest `thrift:"req,1"`
 }
 
 func NewTeachingEvaluationServiceBatchCreateStudentClassArgs() *TeachingEvaluationServiceBatchCreateStudentClassArgs {
@@ -3492,9 +3492,9 @@ func NewTeachingEvaluationServiceBatchCreateStudentClassArgs() *TeachingEvaluati
 func (p *TeachingEvaluationServiceBatchCreateStudentClassArgs) InitDefault() {
 }
 
-var TeachingEvaluationServiceBatchCreateStudentClassArgs_Req_DEFAULT *BatchCreateStudentRequest
+var TeachingEvaluationServiceBatchCreateStudentClassArgs_Req_DEFAULT *BatchCreateStudentClassRequest
 
-func (p *TeachingEvaluationServiceBatchCreateStudentClassArgs) GetReq() (v *BatchCreateStudentRequest) {
+func (p *TeachingEvaluationServiceBatchCreateStudentClassArgs) GetReq() (v *BatchCreateStudentClassRequest) {
 	if !p.IsSetReq() {
 		return TeachingEvaluationServiceBatchCreateStudentClassArgs_Req_DEFAULT
 	}
@@ -3565,7 +3565,7 @@ ReadStructEndError:
 }
 
 func (p *TeachingEvaluationServiceBatchCreateStudentClassArgs) ReadField1(iprot thrift.TProtocol) error {
-	_field := NewBatchCreateStudentRequest()
+	_field := NewBatchCreateStudentClassRequest()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -3627,7 +3627,7 @@ func (p *TeachingEvaluationServiceBatchCreateStudentClassArgs) String() string {
 }
 
 type TeachingEvaluationServiceBatchCreateStudentClassResult struct {
-	Success *BatchCreateStudentResponse `thrift:"success,0,optional"`
+	Success *BatchCreateStudentClassResponse `thrift:"success,0,optional"`
 }
 
 func NewTeachingEvaluationServiceBatchCreateStudentClassResult() *TeachingEvaluationServiceBatchCreateStudentClassResult {
@@ -3637,9 +3637,9 @@ func NewTeachingEvaluationServiceBatchCreateStudentClassResult() *TeachingEvalua
 func (p *TeachingEvaluationServiceBatchCreateStudentClassResult) InitDefault() {
 }
 
-var TeachingEvaluationServiceBatchCreateStudentClassResult_Success_DEFAULT *BatchCreateStudentResponse
+var TeachingEvaluationServiceBatchCreateStudentClassResult_Success_DEFAULT *BatchCreateStudentClassResponse
 
-func (p *TeachingEvaluationServiceBatchCreateStudentClassResult) GetSuccess() (v *BatchCreateStudentResponse) {
+func (p *TeachingEvaluationServiceBatchCreateStudentClassResult) GetSuccess() (v *BatchCreateStudentClassResponse) {
 	if !p.IsSetSuccess() {
 		return TeachingEvaluationServiceBatchCreateStudentClassResult_Success_DEFAULT
 	}
@@ -3710,7 +3710,7 @@ ReadStructEndError:
 }
 
 func (p *TeachingEvaluationServiceBatchCreateStudentClassResult) ReadField0(iprot thrift.TProtocol) error {
-	_field := NewBatchCreateStudentResponse()
+	_field := NewBatchCreateStudentClassResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}

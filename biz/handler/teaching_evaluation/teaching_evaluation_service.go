@@ -81,7 +81,7 @@ func EditStudentClass(ctx context.Context, c *app.RequestContext) {
 // BatchCreateStudentClass .
 // @router /api/v1/itmo/teaching/evaluation/student/class/create/batch [POST]
 func BatchCreateStudentClass(ctx context.Context, c *app.RequestContext) {
-	var req teaching_evaluation.BatchCreateStudentRequest
+	var req teaching_evaluation.BatchCreateStudentClassRequest
 	err := c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
@@ -91,7 +91,7 @@ func BatchCreateStudentClass(ctx context.Context, c *app.RequestContext) {
 	resp, err := student_class.BatchCreateStudentClass(ctx, &req)
 	if err != nil {
 		hlog.CtxErrorf(ctx, "Batch Create Student error: %s", err.Error())
-		resp = &teaching_evaluation.BatchCreateStudentResponse{
+		resp = &teaching_evaluation.BatchCreateStudentClassResponse{
 			BaseResp: handler.GenErrorBaseResp(fmt.Sprintf("batch create student class error, err: %v", err)),
 		}
 	}

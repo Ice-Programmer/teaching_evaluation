@@ -32,17 +32,28 @@ struct StudentClassEditResponse {
 	255: optional base.BaseResp BaseResp    
 }
 
-struct BatchCreateStudentRequest {
+struct BatchCreateStudentClassRequest {
 	1:            list<string> classNumberList    
 	255: optional base.Base    Base               
 }
 
-struct BatchCreateStudentResponse {
+struct BatchCreateStudentClassResponse {
 	1:            i32           num         
 	255: optional base.BaseResp BaseResp    
 }
 
 /** student  **/
+
+enum Major {
+	Computer   = 0
+	Automation = 1
+}
+
+enum Gender {
+	Female = 0
+	Male   = 1
+}
+
 struct CreateStudentRequest {
 	1:            string    studentNumber    
 	2:            string    studentName      
@@ -51,16 +62,6 @@ struct CreateStudentRequest {
 	5:            Major     major            
 	6:            i8        grade            
 	255: optional base.Base Base             
-}
-
-enum Major {
-	Computer   = 0   
-	Automation = 1   
-}
-
-enum Gender {
-	Female = 0   
-	Male   = 1   
 }
 
 struct CreateStudentResponse {
@@ -75,7 +76,7 @@ service TeachingEvaluationService {
     /** student class  **/
     StudentClassCreateResponse CreateStudentClass(1: StudentClassCreateRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/class/create")
     StudentClassEditResponse EditStudentClass(1: StudentClassEditRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/class/edit")
-    BatchCreateStudentResponse BatchCreateStudentClass(1: BatchCreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/class/create/batch")
+    BatchCreateStudentClassResponse BatchCreateStudentClass(1: BatchCreateStudentClassRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/class/create/batch")
 
     /** student   **/
     CreateStudentResponse CreateStudent(1: CreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/create")
