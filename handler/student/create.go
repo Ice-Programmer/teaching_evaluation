@@ -15,8 +15,12 @@ import (
 )
 
 func CreateStudent(ctx context.Context, req *eva.CreateStudentRequest) (*eva.CreateStudentResponse, error) {
-	if err := student.CheckStudent(ctx, req); err != nil {
+	if err := student.CheckStudent(req); err != nil {
 		hlog.CtxErrorf(ctx, "checkStudent error: %s", err.Error())
+		return nil, err
+	}
+
+	if err := student.ValidateStudentExist(ctx, req.StudentNumber); err != nil {
 		return nil, err
 	}
 

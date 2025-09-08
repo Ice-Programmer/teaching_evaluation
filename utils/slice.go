@@ -32,3 +32,63 @@ func Contains[T comparable](slice []T, value T) bool {
 	}
 	return false
 }
+
+func GroupBy[T any, K comparable, V any](items []T, keySelector func(T) K, valueSelector func(T) V) map[K][]V {
+	result := make(map[K][]V, len(items))
+	for _, item := range items {
+		key := keySelector(item)
+		value := valueSelector(item)
+		result[key] = append(result[key], value)
+	}
+	return result
+}
+
+func DistinctStringArray(slice []string) []string {
+	if len(slice) == 0 {
+		return slice
+	}
+
+	seen := make(map[string]bool)
+	result := make([]string, 0, len(slice))
+
+	for _, item := range slice {
+		if !seen[item] {
+			seen[item] = true
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+func ToMap[T any, K comparable, V any](
+	items []T,
+	keySelector func(T) K,
+	valueSelector func(T) V,
+) map[K]V {
+	result := make(map[K]V, len(items))
+	for _, item := range items {
+		key := keySelector(item)
+		value := valueSelector(item)
+		result[key] = value
+	}
+	return result
+}
+
+func DistinctIntArray(slice []int) []int {
+	if len(slice) == 0 {
+		return slice
+	}
+
+	seen := make(map[int]bool)
+	result := make([]int, 0, len(slice))
+
+	for _, item := range slice {
+		if !seen[item] {
+			seen[item] = true
+			result = append(result, item)
+		}
+	}
+
+	return result
+}

@@ -56,3 +56,33 @@ func FindStudentByNumber(ctx context.Context, db *gorm.DB, studentNumber string)
 	}
 	return &student, err
 }
+
+func FindStudentListByNumberList(ctx context.Context, db *gorm.DB, studentNumberList []*string) ([]*Student, error) {
+	if db == nil {
+		db = DB
+	}
+
+	var studentList []*Student
+	err := db.Table(StudentTableName).WithContext(ctx).
+		Where("student_number in (?)", studentNumberList).
+		Find(&studentList).Error
+	if err != nil {
+		hlog.CtxErrorf(ctx, "FindStudentListByNumber db failed: %v", err)
+		return nil, err
+	}
+
+	return studentList, nil
+}
+
+func BatchCreateStudents(ctx context.Context, db *gorm.DB, students []*Student) error {
+	if db == nil {
+		db = DB
+	}
+
+	if err := db.Table(StudentTableName).WithContext(ctx).Create(students).Error; err != nil {
+		hlog.CtxErrorf(ctx, "AddStudent db failed: %v", err)
+		return err
+	}
+
+	return nil
+}

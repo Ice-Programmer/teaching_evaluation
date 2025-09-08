@@ -75,3 +75,13 @@ func _createstudentMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _batchcreatestudentMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _create0Mw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
