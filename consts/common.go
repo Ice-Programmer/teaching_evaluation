@@ -18,3 +18,5 @@ const (
 	NormalStatus = 0
 	BanStatus    = 1
 )
+
+var StatusList = []int{NormalStatus, BanStatus}

@@ -85,3 +85,8 @@ func _create0Mw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _editstudentMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

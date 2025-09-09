@@ -48,7 +48,7 @@ func FindStudentByNumber(ctx context.Context, db *gorm.DB, studentNumber string)
 
 	var student Student
 	err := db.Table(StudentTableName).
-		Where("student_number = ?", studentNumber).
+		Where("student_number = ? and is_delete = 0", studentNumber).
 		First(&student).Error
 	if err != nil {
 		hlog.CtxErrorf(ctx, "FindStudentByNumber db failed: %v", err)
@@ -64,7 +64,7 @@ func FindStudentListByNumberList(ctx context.Context, db *gorm.DB, studentNumber
 
 	var studentList []*Student
 	err := db.Table(StudentTableName).WithContext(ctx).
-		Where("student_number in (?)", studentNumberList).
+		Where("student_number in (?) and is_delete = 0", studentNumberList).
 		Find(&studentList).Error
 	if err != nil {
 		hlog.CtxErrorf(ctx, "FindStudentListByNumber db failed: %v", err)
@@ -84,5 +84,36 @@ func BatchCreateStudents(ctx context.Context, db *gorm.DB, students []*Student) 
 		return err
 	}
 
+	return nil
+}
+
+func FindStudentByID(ctx context.Context, db *gorm.DB, id int64) (*Student, error) {
+	if db == nil {
+		db = DB
+	}
+
+	var student *Student
+	err := db.Table(StudentTableName).
+		Where("id = ? and is_delete = 0", id).First(&student).Error
+	if err != nil {
+		hlog.CtxErrorf(ctx, "FindStudentByID db failed: %v", err)
+		return nil, err
+	}
+
+	return student, nil
+}
+
+func UpdateStudent(ctx context.Context, db *gorm.DB, student *Student) error {
+	if db == nil {
+		db = DB
+	}
+
+	err := db.Table(StudentTableName).WithContext(ctx).
+		Where("id = ? and is_delete = 0", student.ID).
+		Updates(student).Error
+	if err != nil {
+		hlog.CtxErrorf(ctx, "UpdateStudent db failed: %v", err)
+		return err
+	}
 	return nil
 }

@@ -54,6 +54,11 @@ enum Gender {
 	Male   = 1   
 }
 
+enum Status {
+	NormalStatus = 0    
+	BanStatus    = 1    
+}
+
 struct CreateStudentRequest {
 	1:            string    studentNumber    
 	2:            string    studentName      
@@ -88,6 +93,22 @@ struct BatchCreateStudentResponse {
 	255: optional base.BaseResp BaseResp    
 }
 
+struct EditStudentRequest {
+	1:            i64       id               
+	2:            string    studentNumber    
+	3:            string    studentName      
+	4:            Gender    gender           
+	5:            string    classNumber      
+	6:            Major     major            
+	7:            i8        grade             
+	8:            Status    status            
+	255: optional base.Base Base             
+}
+
+struct EditStudentResponse {
+	255: optional base.BaseResp BaseResp    
+}
+
 service TeachingEvaluationService {
     PingResponse Ping(1: PingRequest req) (api.post="/api/v1/itmo/teaching/evaluation/ping")
     
@@ -99,4 +120,5 @@ service TeachingEvaluationService {
     /** student   **/
     CreateStudentResponse CreateStudent(1: CreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/create")
     BatchCreateStudentResponse BatchCreateStudent(1: BatchCreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/create/batch")
+    EditStudentResponse EditStudent(1: EditStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/edit")
 }
