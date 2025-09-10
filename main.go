@@ -14,7 +14,7 @@ import (
 	"os"
 	"path"
 	init_ "teaching_evaluation_backend/init"
-	"teaching_evaluation_backend/logger"
+	"teaching_evaluation_backend/middle"
 
 	"time"
 )
@@ -37,7 +37,8 @@ func main() {
 	h := server.Default()
 
 	h.Use(recovery.Recovery(recovery.WithRecoveryHandler(RecoveryHandler)))
-	h.Use(logger.LoggingMiddleware())
+	h.Use(middle.LoggingMiddleware())
+	h.Use(middle.JWTAuthMiddleware())
 
 	register(h)
 	h.Spin()

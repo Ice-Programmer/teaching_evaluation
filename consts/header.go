@@ -1,5 +1,6 @@
 package consts
 
 const (
-	TraceIDHeader = "X-Trace-Id"
+	TraceIDHeader       = "X-Trace-Id"
+	AuthorizationHeader = "Authorization"
 )

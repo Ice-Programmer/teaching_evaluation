@@ -5,15 +5,15 @@ package teaching_evaluation
 import (
 	"context"
 	"fmt"
+	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"teaching_evaluation_backend/biz/model/teaching_evaluation"
 	"teaching_evaluation_backend/handler"
+	"teaching_evaluation_backend/handler/login"
 	"teaching_evaluation_backend/handler/student"
 	"teaching_evaluation_backend/handler/student_class"
 	"teaching_evaluation_backend/utils"
-
-	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"teaching_evaluation_backend/biz/model/teaching_evaluation"
 )
 
 // Ping .
@@ -155,6 +155,27 @@ func EditStudent(ctx context.Context, c *app.RequestContext) {
 	if err != nil {
 		hlog.CtxErrorf(ctx, "EditStudent error: %s", err.Error())
 		resp = &teaching_evaluation.EditStudentResponse{
+			BaseResp: handler.GenErrorBaseResp(err.Error()),
+		}
+	}
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// UserLogin .
+// @router /api/v1/itmo/teaching/evaluation/user/login [POST]
+func UserLogin(ctx context.Context, c *app.RequestContext) {
+	var req teaching_evaluation.UserLoginRequest
+	err := c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp, err := login.UserLogin(ctx, req.UserAccount, req.UserPassword)
+	if err != nil {
+		hlog.CtxErrorf(ctx, "UserLogin error: %s", err.Error())
+		resp = &teaching_evaluation.UserLoginResponse{
 			BaseResp: handler.GenErrorBaseResp(err.Error()),
 		}
 	}

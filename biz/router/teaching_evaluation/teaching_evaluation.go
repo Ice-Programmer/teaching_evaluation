@@ -29,18 +29,25 @@ func Register(r *server.Hertz) {
 						_evaluation := _teaching.Group("/evaluation", _evaluationMw()...)
 						_evaluation.POST("/ping", append(_pingMw(), teaching_evaluation.Ping)...)
 						{
-							_student := _evaluation.Group("/student", _studentMw()...)
-							_student.POST("/create", append(_createstudentMw(), teaching_evaluation.CreateStudent)...)
-							_create := _student.Group("/create", _createMw()...)
-							_create.POST("/batch", append(_batchcreatestudentMw(), teaching_evaluation.BatchCreateStudent)...)
-							_student.POST("/edit", append(_editstudentMw(), teaching_evaluation.EditStudent)...)
+							_admin := _evaluation.Group("/admin", _adminMw()...)
 							{
-								_class := _student.Group("/class", _classMw()...)
-								_class.POST("/create", append(_createstudentclassMw(), teaching_evaluation.CreateStudentClass)...)
-								_create0 := _class.Group("/create", _create0Mw()...)
-								_create0.POST("/batch", append(_batchcreatestudentclassMw(), teaching_evaluation.BatchCreateStudentClass)...)
-								_class.POST("/edit", append(_editstudentclassMw(), teaching_evaluation.EditStudentClass)...)
+								_student := _admin.Group("/student", _studentMw()...)
+								_student.POST("/create", append(_createstudentMw(), teaching_evaluation.CreateStudent)...)
+								_create := _student.Group("/create", _createMw()...)
+								_create.POST("/batch", append(_batchcreatestudentMw(), teaching_evaluation.BatchCreateStudent)...)
+								_student.POST("/edit", append(_editstudentMw(), teaching_evaluation.EditStudent)...)
+								{
+									_class := _student.Group("/class", _classMw()...)
+									_class.POST("/create", append(_createstudentclassMw(), teaching_evaluation.CreateStudentClass)...)
+									_create0 := _class.Group("/create", _create0Mw()...)
+									_create0.POST("/batch", append(_batchcreatestudentclassMw(), teaching_evaluation.BatchCreateStudentClass)...)
+									_class.POST("/edit", append(_editstudentclassMw(), teaching_evaluation.EditStudentClass)...)
+								}
 							}
+						}
+						{
+							_user := _evaluation.Group("/user", _userMw()...)
+							_user.POST("/login", append(_userloginMw(), teaching_evaluation.UserLogin)...)
 						}
 					}
 				}

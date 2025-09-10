@@ -55,8 +55,8 @@ enum Gender {
 }
 
 enum Status {
-	NormalStatus = 0    
-	BanStatus    = 1    
+	NormalStatus = 0   
+	BanStatus    = 1   
 }
 
 struct CreateStudentRequest {
@@ -100,8 +100,8 @@ struct EditStudentRequest {
 	4:            Gender    gender           
 	5:            string    classNumber      
 	6:            Major     major            
-	7:            i8        grade             
-	8:            Status    status            
+	7:            i8        grade            
+	8:            Status    status           
 	255: optional base.Base Base             
 }
 
@@ -109,16 +109,45 @@ struct EditStudentResponse {
 	255: optional base.BaseResp BaseResp    
 }
 
+/**  user login  **/
+enum UserRole {
+	Student = 1   
+	Admin   = 2   
+}
+
+struct UserLoginRequest {
+	1:            string    userAccount     
+	2:            string    userPassword    
+	255: optional base.Base Base            
+}
+
+struct UserInfo {
+	1:  i64      id          
+	2:  string   name        
+	3:  UserRole role        
+	4:  i64      createAt    
+}
+
+struct UserLoginResponse {
+	1:            UserInfo      userInfo    
+	2:            string        token       
+	3:            i64           expireAt    
+	255: optional base.BaseResp BaseResp    
+}
+
 service TeachingEvaluationService {
     PingResponse Ping(1: PingRequest req) (api.post="/api/v1/itmo/teaching/evaluation/ping")
     
+    /**  user login  **/
+    UserLoginResponse UserLogin(1: UserLoginRequest req) (api.post="/api/v1/itmo/teaching/evaluation/user/login")
+    
     /** student class  **/
-    StudentClassCreateResponse CreateStudentClass(1: StudentClassCreateRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/class/create")
-    StudentClassEditResponse EditStudentClass(1: StudentClassEditRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/class/edit")
-    BatchCreateStudentClassResponse BatchCreateStudentClass(1: BatchCreateStudentClassRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/class/create/batch")
+    StudentClassCreateResponse CreateStudentClass(1: StudentClassCreateRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/create")
+    StudentClassEditResponse EditStudentClass(1: StudentClassEditRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/edit")
+    BatchCreateStudentClassResponse BatchCreateStudentClass(1: BatchCreateStudentClassRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/create/batch")
 
     /** student   **/
-    CreateStudentResponse CreateStudent(1: CreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/create")
-    BatchCreateStudentResponse BatchCreateStudent(1: BatchCreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/create/batch")
-    EditStudentResponse EditStudent(1: EditStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/student/edit")
+    CreateStudentResponse CreateStudent(1: CreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/create")
+    BatchCreateStudentResponse BatchCreateStudent(1: BatchCreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/create/batch")
+    EditStudentResponse EditStudent(1: EditStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/edit")
 }

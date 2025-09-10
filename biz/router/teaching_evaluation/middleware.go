@@ -90,3 +90,18 @@ func _editstudentMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _userMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _userloginMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _adminMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

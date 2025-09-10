@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"errors"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"gorm.io/gorm"
 )
@@ -116,4 +117,24 @@ func UpdateStudent(ctx context.Context, db *gorm.DB, student *Student) error {
 		return err
 	}
 	return nil
+}
+
+func StudentLogin(ctx context.Context, db *gorm.DB, userAccount, userPassword string) (*Student, error) {
+	if db == nil {
+		db = DB
+	}
+
+	var student *Student
+	err := db.Table(StudentTableName).WithContext(ctx).
+		Where("student_number = ? and password = ? and is_delete = 0", userAccount, userPassword).
+		First(&student).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		hlog.CtxErrorf(ctx, "StudentLogin db failed: %v", err)
+		return nil, err
+	}
+
+	return student, nil
 }
