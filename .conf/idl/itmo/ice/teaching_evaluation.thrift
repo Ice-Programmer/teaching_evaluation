@@ -80,12 +80,13 @@ struct BatchCreateStudentRequest {
 }
 
 struct StudentInfo {
-	1:  string studentNumber    
-	2:  string studentName      
-	3:  Gender gender           
-	4:  string classNumber      
-	5:  Major  major            
-	6:  i8     grade            
+	1:          string studentNumber    
+	2:          string studentName      
+	3:          Gender gender           
+	4:          string classNumber      
+	5:          Major  major            
+	6:          i8     grade            
+	7: optional i64    id               
 }
 
 struct BatchCreateStudentResponse {
@@ -107,6 +108,29 @@ struct EditStudentRequest {
 
 struct EditStudentResponse {
 	255: optional base.BaseResp BaseResp    
+}
+
+struct QueryStudentCondition {
+	1: optional i64       id         
+	2: optional list<i64> idList     
+	3: optional string    name       
+	4: optional string    number     
+	5: optional i64       classId    
+	6: optional Major     major      
+	7: optional i8        grade      
+}
+
+struct QueryStudentRequest {
+	1:            QueryStudentCondition queryStudentCondition    
+	2:            i32                   pageNum                  
+	3:            i32                   pageSize                 
+	255: optional base.Base             Base                     
+}
+
+struct QueryStudentResponse {
+	1:            i64               total              
+	2:            list<StudentInfo> studentInfoList    
+	255: optional base.BaseResp     BaseResp           
 }
 
 /**  user login  **/
@@ -150,4 +174,5 @@ service TeachingEvaluationService {
     CreateStudentResponse CreateStudent(1: CreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/create")
     BatchCreateStudentResponse BatchCreateStudent(1: BatchCreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/create/batch")
     EditStudentResponse EditStudent(1: EditStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/edit")
+    QueryStudentResponse QueryStudent(1: QueryStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/query")
 }

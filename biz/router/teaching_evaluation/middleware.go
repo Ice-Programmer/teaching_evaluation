@@ -105,3 +105,8 @@ func _adminMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _querystudentMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

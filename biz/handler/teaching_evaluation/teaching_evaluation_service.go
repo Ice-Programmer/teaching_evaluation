@@ -182,3 +182,24 @@ func UserLogin(ctx context.Context, c *app.RequestContext) {
 
 	c.JSON(consts.StatusOK, resp)
 }
+
+// QueryStudent .
+// @router /api/v1/itmo/teaching/evaluation/admin/student/query [POST]
+func QueryStudent(ctx context.Context, c *app.RequestContext) {
+	var req teaching_evaluation.QueryStudentRequest
+	err := c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp, err := student.QueryStudent(ctx, &req)
+	if err != nil {
+		hlog.CtxErrorf(ctx, "QueryStudent error: %s", err.Error())
+		resp = &teaching_evaluation.QueryStudentResponse{
+			BaseResp: handler.GenErrorBaseResp(err.Error()),
+		}
+	}
+
+	c.JSON(consts.StatusOK, resp)
+}

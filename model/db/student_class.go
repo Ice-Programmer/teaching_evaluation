@@ -49,6 +49,22 @@ func FindClassById(ctx context.Context, db *gorm.DB, id int64) (*StudentClass, e
 	return &studentClass, nil
 }
 
+func FindClassListByIds(ctx context.Context, db *gorm.DB, ids []int64) ([]*StudentClass, error) {
+	if db == nil {
+		db = DB
+	}
+
+	var studentClass []*StudentClass
+	err := db.Table(StudentClassTableName).WithContext(ctx).
+		Where("id in (?)", ids).
+		Find(&studentClass).Error
+	if err != nil {
+		hlog.CtxErrorf(ctx, "FindClassListByIds db failed: %v", err)
+		return nil, err
+	}
+	return studentClass, nil
+}
+
 func UpdateClass(ctx context.Context, db *gorm.DB, studentClass *StudentClass) error {
 	if db == nil {
 		db = DB

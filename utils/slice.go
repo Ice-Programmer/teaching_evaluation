@@ -75,13 +75,13 @@ func ToMap[T any, K comparable, V any](
 	return result
 }
 
-func DistinctIntArray(slice []int) []int {
+func DistinctIntArray(slice []int64) []int64 {
 	if len(slice) == 0 {
 		return slice
 	}
 
-	seen := make(map[int]bool)
-	result := make([]int, 0, len(slice))
+	seen := make(map[int64]bool)
+	result := make([]int64, 0, len(slice))
 
 	for _, item := range slice {
 		if !seen[item] {

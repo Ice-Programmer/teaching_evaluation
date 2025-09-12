@@ -5,6 +5,8 @@ import (
 	"errors"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"gorm.io/gorm"
+	eva "teaching_evaluation_backend/biz/model/teaching_evaluation"
+	"teaching_evaluation_backend/utils"
 )
 
 var (
@@ -137,4 +139,63 @@ func StudentLogin(ctx context.Context, db *gorm.DB, userAccount, userPassword st
 	}
 
 	return student, nil
+}
+
+func QueryStudentPage(ctx context.Context, db *gorm.DB, pageSize, pageNum int32, condition *eva.QueryStudentCondition) ([]*Student, int64, error) {
+	if db == nil {
+		db = DB
+	}
+
+	query := buildCondition(db, condition).Table(StudentTableName).WithContext(ctx)
+
+	// 统计总数
+	var total int64
+	if err := query.Count(&total).Error; err != nil {
+		hlog.CtxErrorf(ctx, "QueryStudentPage db failed: %v", err)
+		return nil, 0, err
+	}
+
+	offset := int((pageNum - 1) * pageSize)
+	var studentList []*Student
+	err := query.Where("is_delete = 0").
+		Limit(int(pageSize)).Offset(offset).
+		Find(&studentList).Error
+	if err != nil {
+		hlog.CtxErrorf(ctx, "QueryStudentPage db failed: %v", err)
+		return nil, 0, err
+	}
+
+	return studentList, total, nil
+}
+
+func buildCondition(db *gorm.DB, condition *eva.QueryStudentCondition) *gorm.DB {
+	if condition == nil {
+		return db
+	}
+
+	if condition.ID != nil {
+		return db.Where("id = ?", condition.ID)
+	}
+
+	if condition.Major != nil {
+		return db.Where("major = ?", condition.Major)
+	}
+
+	if condition.Name != nil {
+		return db.Where("student_name like ?", utils.WrapLike(*condition.Name))
+	}
+
+	if condition.Number != nil {
+		return db.Where("student_number = ?", condition.Number)
+	}
+
+	if condition.ClassId != nil {
+		return db.Where("class_id = ?", condition.ClassId)
+	}
+
+	if condition.Grade != nil {
+		return db.Where("grade = ?", condition.Grade)
+	}
+
+	return db
 }
