@@ -35,7 +35,7 @@ func CreateStudent(ctx context.Context, req *eva.CreateStudentRequest) (*eva.Cre
 	studentInfo := &db.Student{
 		ID:            utils.GetId(),
 		StudentNumber: req.StudentNumber,
-		Password:      req.StudentNumber,
+		Password:      utils.MD5(req.StudentNumber),
 		StudentName:   req.StudentName,
 		Gender:        int8(req.Gender),
 		ClassID:       studentClass.ID,

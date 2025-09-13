@@ -36,7 +36,7 @@ func BatchCreateStudent(ctx context.Context, req *eva.BatchCreateStudentRequest)
 		studentList = append(studentList, &db.Student{
 			ID:            utils.GetId(),
 			StudentNumber: studentInfo.StudentNumber,
-			Password:      studentInfo.StudentNumber,
+			Password:      utils.MD5(studentInfo.StudentNumber),
 			StudentName:   studentInfo.StudentName,
 			Gender:        int8(studentInfo.Gender),
 			ClassID:       classMap[studentInfo.ClassNumber],

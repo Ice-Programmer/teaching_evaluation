@@ -4,6 +4,8 @@ import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"gorm.io/gorm"
+	eva "teaching_evaluation_backend/biz/model/teaching_evaluation"
+	"teaching_evaluation_backend/utils"
 )
 
 var (
@@ -123,4 +125,47 @@ func BatchCreateListByNumber(ctx context.Context, db *gorm.DB, studentClassList 
 		return err
 	}
 	return nil
+}
+
+func QueryClassPage(ctx context.Context, db *gorm.DB, pageSize int32, pageNum int32, condition *eva.QueryClassCondition) ([]*StudentClass, int64, error) {
+	if db == nil {
+		db = DB
+	}
+
+	query := buildClassCondition(db, condition).Table(StudentClassTableName).WithContext(ctx)
+	var total int64
+	if err := query.Count(&total).Error; err != nil {
+		hlog.CtxErrorf(ctx, "QueryClassPage db count failed: %v", err)
+		return nil, 0, err
+	}
+
+	var studentClassList []*StudentClass
+	offset := int((pageNum - 1) * pageSize)
+	if err := query.Limit(int(pageSize)).Offset(offset).Find(&studentClassList).Error; err != nil {
+		hlog.CtxErrorf(ctx, "QueryClassPage db failed: %v", err)
+		return nil, 0, err
+	}
+
+	return studentClassList, total, nil
+}
+
+func buildClassCondition(db *gorm.DB, condition *eva.QueryClassCondition) *gorm.DB {
+	db = db.Where("is_delete = 0")
+	if condition == nil {
+		return db
+	}
+
+	if condition.ID != nil {
+		db = db.Where("id = ?", condition.ID)
+	}
+
+	if condition.ClassNumber != nil {
+		db = db.Where("class_number like ?", utils.WrapLike(*condition.ClassNumber))
+	}
+
+	if condition.Ids != nil {
+		db = db.Where("id in (?)", condition.Ids)
+	}
+
+	return db
 }

@@ -9,6 +9,7 @@ import (
 	"teaching_evaluation_backend/handler"
 	"teaching_evaluation_backend/middle"
 	"teaching_evaluation_backend/model/db"
+	"teaching_evaluation_backend/utils"
 	"time"
 )
 
@@ -18,6 +19,7 @@ func UserLogin(ctx context.Context, userAccount, userPassword string) (*eva.User
 		return nil, err
 	}
 
+	userPassword = utils.MD5(userPassword)
 	userInfo, err := findUserInfo(ctx, userAccount, userPassword)
 	if err != nil {
 		return nil, err

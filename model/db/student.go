@@ -146,7 +146,7 @@ func QueryStudentPage(ctx context.Context, db *gorm.DB, pageSize, pageNum int32,
 		db = DB
 	}
 
-	query := buildCondition(db, condition).Table(StudentTableName).WithContext(ctx)
+	query := buildStudentCondition(db, condition).Table(StudentTableName).WithContext(ctx)
 
 	// 统计总数
 	var total int64
@@ -157,7 +157,7 @@ func QueryStudentPage(ctx context.Context, db *gorm.DB, pageSize, pageNum int32,
 
 	offset := int((pageNum - 1) * pageSize)
 	var studentList []*Student
-	err := query.Where("is_delete = 0").
+	err := query.
 		Limit(int(pageSize)).Offset(offset).
 		Find(&studentList).Error
 	if err != nil {
@@ -168,33 +168,35 @@ func QueryStudentPage(ctx context.Context, db *gorm.DB, pageSize, pageNum int32,
 	return studentList, total, nil
 }
 
-func buildCondition(db *gorm.DB, condition *eva.QueryStudentCondition) *gorm.DB {
+func buildStudentCondition(db *gorm.DB, condition *eva.QueryStudentCondition) *gorm.DB {
+	db = db.Where("is_delete = 0")
+
 	if condition == nil {
 		return db
 	}
 
 	if condition.ID != nil {
-		return db.Where("id = ?", condition.ID)
+		db = db.Where("id = ?", condition.ID)
 	}
 
 	if condition.Major != nil {
-		return db.Where("major = ?", condition.Major)
+		db = db.Where("major = ?", condition.Major)
 	}
 
 	if condition.Name != nil {
-		return db.Where("student_name like ?", utils.WrapLike(*condition.Name))
+		db = db.Where("student_name like ?", utils.WrapLike(*condition.Name))
 	}
 
 	if condition.Number != nil {
-		return db.Where("student_number = ?", condition.Number)
+		db = db.Where("student_number = ?", condition.Number)
 	}
 
 	if condition.ClassId != nil {
-		return db.Where("class_id = ?", condition.ClassId)
+		db = db.Where("class_id = ?", condition.ClassId)
 	}
 
 	if condition.Grade != nil {
-		return db.Where("grade = ?", condition.Grade)
+		db = db.Where("grade = ?", condition.Grade)
 	}
 
 	return db

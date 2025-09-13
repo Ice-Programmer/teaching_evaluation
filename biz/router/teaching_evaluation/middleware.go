@@ -110,3 +110,8 @@ func _querystudentMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _querystudentclassMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

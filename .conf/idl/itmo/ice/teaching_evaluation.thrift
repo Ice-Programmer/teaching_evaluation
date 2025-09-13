@@ -42,6 +42,31 @@ struct BatchCreateStudentClassResponse {
 	255: optional base.BaseResp BaseResp    
 }
 
+struct QueryClassCondition {
+	1: optional i64       id             
+	2: optional string    classNumber    
+	3: optional list<i64> ids            
+}
+
+struct QueryStudentClassRequest {
+	1:            QueryClassCondition condition    
+	2:            i32                 pageNum      
+	3:            i32                 pageSize     
+	255: optional base.Base           Base         
+}
+
+struct QueryStudentClassResponse {
+	1:            i64             total        
+	2:            list<ClassInfo> classList    
+	255: optional base.BaseResp   BaseResp     
+}
+
+struct ClassInfo {
+	1:  i64    id             
+	2:  string classNumber    
+	3:  i64    createAt       
+}
+
 /** student  **/
 
 enum Major {
@@ -169,6 +194,7 @@ service TeachingEvaluationService {
     StudentClassCreateResponse CreateStudentClass(1: StudentClassCreateRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/create")
     StudentClassEditResponse EditStudentClass(1: StudentClassEditRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/edit")
     BatchCreateStudentClassResponse BatchCreateStudentClass(1: BatchCreateStudentClassRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/create/batch")
+    QueryStudentClassResponse QueryStudentClass(1: QueryStudentClassRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/query")
 
     /** student   **/
     CreateStudentResponse CreateStudent(1: CreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/create")
