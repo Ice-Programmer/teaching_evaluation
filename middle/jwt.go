@@ -20,6 +20,7 @@ type Claims struct {
 	Username string       `json:"username"`
 	ID       int64        `json:"id"`
 	Role     eva.UserRole `json:"role"`
+	CreateAt int64        `json:"create_at"`
 	jwt.RegisteredClaims
 }
 
@@ -35,7 +36,8 @@ func JWTAuthMiddleware() app.HandlerFunc {
 		lastPathStart := strings.LastIndex(path, "/")
 		pathEnd := path[lastPathStart:]
 		// 白名单（不需要鉴权的接口）
-		if utils.Contains(NotNeedAuthPathSuffix, pathEnd) {
+		method := strings.ToUpper(string(c.Method()))
+		if utils.Contains(NotNeedAuthPathSuffix, pathEnd) || method == "OPTIONS" {
 			c.Next(ctx)
 			return
 		}
@@ -66,6 +68,13 @@ func JWTAuthMiddleware() app.HandlerFunc {
 			return
 		}
 
+		ctx = utils.SetCurrentUserInfo(ctx, eva.UserInfo{
+			ID:       claims.ID,
+			Name:     claims.Username,
+			Role:     claims.Role,
+			CreateAt: claims.CreateAt,
+		})
+
 		c.Next(ctx)
 	}
 }
@@ -75,6 +84,7 @@ func GenerateToken(expireTime time.Time, userInfo *eva.UserInfo) (string, error)
 		Username: userInfo.Name,
 		ID:       userInfo.ID,
 		Role:     userInfo.Role,
+		CreateAt: userInfo.CreateAt,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expireTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),

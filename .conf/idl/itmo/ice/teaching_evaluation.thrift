@@ -184,12 +184,22 @@ struct UserLoginResponse {
 	255: optional base.BaseResp BaseResp    
 }
 
+struct GetCurrentUserRequest {
+	255: optional base.Base Base    
+}
+
+struct GetCurrentUserResponse {
+	1:            UserInfo      userInfo    
+	255: optional base.BaseResp BaseResp    
+}
+
 service TeachingEvaluationService {
     PingResponse Ping(1: PingRequest req) (api.post="/api/v1/itmo/teaching/evaluation/ping")
     
     /**  user login  **/
     UserLoginResponse UserLogin(1: UserLoginRequest req) (api.post="/api/v1/itmo/teaching/evaluation/user/login")
-    
+    GetCurrentUserResponse GetCurrentUser(1: GetCurrentUserRequest req) (api.post="/api/v1/itmo/teaching/evaluation/user/current")
+
     /** student class  **/
     StudentClassCreateResponse CreateStudentClass(1: StudentClassCreateRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/create")
     StudentClassEditResponse EditStudentClass(1: StudentClassEditRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/edit")

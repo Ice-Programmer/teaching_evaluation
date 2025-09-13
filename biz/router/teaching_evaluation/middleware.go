@@ -115,3 +115,8 @@ func _querystudentclassMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _getcurrentuserMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

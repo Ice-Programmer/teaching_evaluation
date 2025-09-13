@@ -7,6 +7,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"github.com/hertz-contrib/cors"
 	hertzlogrus "github.com/hertz-contrib/logger/logrus"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
@@ -34,11 +35,25 @@ func main() {
 		hlog.CtxFatalf(ctx, "init failed: %v", err)
 	}
 
-	h := server.Default()
+	h := server.Default(
+		server.WithHandleMethodNotAllowed(true),
+	)
 
 	h.Use(recovery.Recovery(recovery.WithRecoveryHandler(RecoveryHandler)))
 	h.Use(middle.LoggingMiddleware())
 	h.Use(middle.JWTAuthMiddleware())
+	h.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"PUT", "PATCH", "POST", "GET", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Authorization", "Content-Type"},
+		ExposeHeaders:    []string{"Content-Type"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return true
+		},
+		//超时时间设定
+		MaxAge: 24 * time.Hour,
+	}))
 
 	register(h)
 	h.Spin()

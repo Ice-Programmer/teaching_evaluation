@@ -49,6 +49,7 @@ func Register(r *server.Hertz) {
 						}
 						{
 							_user := _evaluation.Group("/user", _userMw()...)
+							_user.POST("/current", append(_getcurrentuserMw(), teaching_evaluation.GetCurrentUser)...)
 							_user.POST("/login", append(_userloginMw(), teaching_evaluation.UserLogin)...)
 						}
 					}
