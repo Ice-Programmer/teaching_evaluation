@@ -49,7 +49,7 @@ struct QueryClassCondition {
 }
 
 struct QueryStudentClassRequest {
-	1:            QueryClassCondition condition    
+	1:   optional QueryClassCondition condition
 	2:            i32                 pageNum      
 	3:            i32                 pageSize     
 	255: optional base.Base           Base         

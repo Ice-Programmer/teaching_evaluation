@@ -1995,7 +1995,7 @@ func (p *QueryClassCondition) String() string {
 }
 
 type QueryStudentClassRequest struct {
-	Condition *QueryClassCondition `thrift:"condition,1" form:"condition" json:"condition" query:"condition"`
+	Condition *QueryClassCondition `thrift:"condition,1,optional" form:"condition" json:"condition,omitempty" query:"condition"`
 	PageNum   int32                `thrift:"pageNum,2" form:"pageNum" json:"pageNum" query:"pageNum"`
 	PageSize  int32                `thrift:"pageSize,3" form:"pageSize" json:"pageSize" query:"pageSize"`
 	Base      *base.Base           `thrift:"Base,255,optional" form:"Base" json:"Base,omitempty" query:"Base"`
@@ -2208,14 +2208,16 @@ WriteStructEndError:
 }
 
 func (p *QueryStudentClassRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("condition", thrift.STRUCT, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := p.Condition.Write(oprot); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
+	if p.IsSetCondition() {
+		if err = oprot.WriteFieldBegin("condition", thrift.STRUCT, 1); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Condition.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
 	}
 	return nil
 WriteFieldBeginError:
