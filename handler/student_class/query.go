@@ -2,6 +2,7 @@ package student_class
 
 import (
 	"context"
+	"strconv"
 	eva "teaching_evaluation_backend/biz/model/teaching_evaluation"
 	"teaching_evaluation_backend/handler"
 	"teaching_evaluation_backend/model/db"
@@ -28,7 +29,7 @@ func WrappedClassInfo(classList []*db.StudentClass) []*eva.ClassInfo {
 	classInfoList := make([]*eva.ClassInfo, 0, len(classList))
 	for _, class := range classList {
 		classInfoList = append(classInfoList, &eva.ClassInfo{
-			ID:          class.ID,
+			ID:          strconv.FormatInt(class.ID, 10),
 			ClassNumber: class.ClassNumber,
 			CreateAt:    class.CreateAt,
 		})

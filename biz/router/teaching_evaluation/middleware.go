@@ -120,3 +120,8 @@ func _getcurrentuserMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _deletestudentclassMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

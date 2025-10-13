@@ -3,6 +3,7 @@ package student_class
 import (
 	"context"
 	"fmt"
+	"strconv"
 	eva "teaching_evaluation_backend/biz/model/teaching_evaluation"
 	"teaching_evaluation_backend/handler"
 	"teaching_evaluation_backend/model/db"
@@ -13,12 +14,17 @@ func EditStudentClass(ctx context.Context, req *eva.StudentClassEditRequest) (*e
 		return nil, err
 	}
 
-	if _, err := db.FindClassById(ctx, db.DB, req.GetID()); err != nil {
+	classId, err := strconv.ParseInt(req.GetID(), 10, 64)
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err := db.FindClassById(ctx, db.DB, classId); err != nil {
 		return nil, err
 	}
 
 	updateClass := &db.StudentClass{
-		ID:          req.ID,
+		ID:          classId,
 		ClassNumber: req.ClassNumber,
 	}
 

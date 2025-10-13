@@ -42,6 +42,7 @@ func Register(r *server.Hertz) {
 									_class.POST("/create", append(_createstudentclassMw(), teaching_evaluation.CreateStudentClass)...)
 									_create0 := _class.Group("/create", _create0Mw()...)
 									_create0.POST("/batch", append(_batchcreatestudentclassMw(), teaching_evaluation.BatchCreateStudentClass)...)
+									_class.POST("/delete", append(_deletestudentclassMw(), teaching_evaluation.DeleteStudentClass)...)
 									_class.POST("/edit", append(_editstudentclassMw(), teaching_evaluation.EditStudentClass)...)
 									_class.POST("/query", append(_querystudentclassMw(), teaching_evaluation.QueryStudentClass)...)
 								}

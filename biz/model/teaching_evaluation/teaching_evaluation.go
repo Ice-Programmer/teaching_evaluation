@@ -917,7 +917,7 @@ func (p *StudentClassCreateResponse) String() string {
 }
 
 type StudentClassEditRequest struct {
-	ID          int64      `thrift:"id,1,required" form:"id,required" json:"id,required" query:"id,required"`
+	ID          string     `thrift:"id,1,required" form:"id,required" json:"id,required" query:"id,required"`
 	ClassNumber string     `thrift:"classNumber,2" form:"classNumber" json:"classNumber" query:"classNumber"`
 	Base        *base.Base `thrift:"Base,255,optional" form:"Base" json:"Base,omitempty" query:"Base"`
 }
@@ -929,7 +929,7 @@ func NewStudentClassEditRequest() *StudentClassEditRequest {
 func (p *StudentClassEditRequest) InitDefault() {
 }
 
-func (p *StudentClassEditRequest) GetID() (v int64) {
+func (p *StudentClassEditRequest) GetID() (v string) {
 	return p.ID
 }
 
@@ -976,7 +976,7 @@ func (p *StudentClassEditRequest) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1037,8 +1037,8 @@ RequiredFieldNotSetError:
 
 func (p *StudentClassEditRequest) ReadField1(iprot thrift.TProtocol) error {
 
-	var _field int64
-	if v, err := iprot.ReadI64(); err != nil {
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -1103,10 +1103,10 @@ WriteStructEndError:
 }
 
 func (p *StudentClassEditRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("id", thrift.I64, 1); err != nil {
+	if err = oprot.WriteFieldBegin("id", thrift.STRING, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.ID); err != nil {
+	if err := oprot.WriteString(p.ID); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1713,7 +1713,7 @@ func (p *BatchCreateStudentClassResponse) String() string {
 }
 
 type QueryClassCondition struct {
-	ID          *int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	ID          *string `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
 	ClassNumber *string `thrift:"classNumber,2,optional" form:"classNumber" json:"classNumber,omitempty" query:"classNumber"`
 	Ids         []int64 `thrift:"ids,3,optional" form:"ids" json:"ids,omitempty" query:"ids"`
 }
@@ -1725,9 +1725,9 @@ func NewQueryClassCondition() *QueryClassCondition {
 func (p *QueryClassCondition) InitDefault() {
 }
 
-var QueryClassCondition_ID_DEFAULT int64
+var QueryClassCondition_ID_DEFAULT string
 
-func (p *QueryClassCondition) GetID() (v int64) {
+func (p *QueryClassCondition) GetID() (v string) {
 	if !p.IsSetID() {
 		return QueryClassCondition_ID_DEFAULT
 	}
@@ -1789,7 +1789,7 @@ func (p *QueryClassCondition) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1843,8 +1843,8 @@ ReadStructEndError:
 
 func (p *QueryClassCondition) ReadField1(iprot thrift.TProtocol) error {
 
-	var _field *int64
-	if v, err := iprot.ReadI64(); err != nil {
+	var _field *string
+	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
 		_field = &v
@@ -1925,10 +1925,10 @@ WriteStructEndError:
 
 func (p *QueryClassCondition) writeField1(oprot thrift.TProtocol) (err error) {
 	if p.IsSetID() {
-		if err = oprot.WriteFieldBegin("id", thrift.I64, 1); err != nil {
+		if err = oprot.WriteFieldBegin("id", thrift.STRING, 1); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI64(*p.ID); err != nil {
+		if err := oprot.WriteString(*p.ID); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -2542,7 +2542,7 @@ func (p *QueryStudentClassResponse) String() string {
 }
 
 type ClassInfo struct {
-	ID          int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
+	ID          string `thrift:"id,1" form:"id" json:"id" query:"id"`
 	ClassNumber string `thrift:"classNumber,2" form:"classNumber" json:"classNumber" query:"classNumber"`
 	CreateAt    int64  `thrift:"createAt,3" form:"createAt" json:"createAt" query:"createAt"`
 }
@@ -2554,7 +2554,7 @@ func NewClassInfo() *ClassInfo {
 func (p *ClassInfo) InitDefault() {
 }
 
-func (p *ClassInfo) GetID() (v int64) {
+func (p *ClassInfo) GetID() (v string) {
 	return p.ID
 }
 
@@ -2591,7 +2591,7 @@ func (p *ClassInfo) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -2645,8 +2645,8 @@ ReadStructEndError:
 
 func (p *ClassInfo) ReadField1(iprot thrift.TProtocol) error {
 
-	var _field int64
-	if v, err := iprot.ReadI64(); err != nil {
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -2714,10 +2714,10 @@ WriteStructEndError:
 }
 
 func (p *ClassInfo) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("id", thrift.I64, 1); err != nil {
+	if err = oprot.WriteFieldBegin("id", thrift.STRING, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.ID); err != nil {
+	if err := oprot.WriteString(p.ID); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -2767,6 +2767,345 @@ func (p *ClassInfo) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("ClassInfo(%+v)", *p)
+
+}
+
+type DeleteStudentClassRequest struct {
+	ID   string     `thrift:"id,1" form:"id" json:"id" query:"id"`
+	Base *base.Base `thrift:"Base,255,optional" form:"Base" json:"Base,omitempty" query:"Base"`
+}
+
+func NewDeleteStudentClassRequest() *DeleteStudentClassRequest {
+	return &DeleteStudentClassRequest{}
+}
+
+func (p *DeleteStudentClassRequest) InitDefault() {
+}
+
+func (p *DeleteStudentClassRequest) GetID() (v string) {
+	return p.ID
+}
+
+var DeleteStudentClassRequest_Base_DEFAULT *base.Base
+
+func (p *DeleteStudentClassRequest) GetBase() (v *base.Base) {
+	if !p.IsSetBase() {
+		return DeleteStudentClassRequest_Base_DEFAULT
+	}
+	return p.Base
+}
+
+var fieldIDToName_DeleteStudentClassRequest = map[int16]string{
+	1:   "id",
+	255: "Base",
+}
+
+func (p *DeleteStudentClassRequest) IsSetBase() bool {
+	return p.Base != nil
+}
+
+func (p *DeleteStudentClassRequest) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 255:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField255(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_DeleteStudentClassRequest[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *DeleteStudentClassRequest) ReadField1(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ID = _field
+	return nil
+}
+func (p *DeleteStudentClassRequest) ReadField255(iprot thrift.TProtocol) error {
+	_field := base.NewBase()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Base = _field
+	return nil
+}
+
+func (p *DeleteStudentClassRequest) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("DeleteStudentClassRequest"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField255(oprot); err != nil {
+			fieldId = 255
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *DeleteStudentClassRequest) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("id", thrift.STRING, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.ID); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+func (p *DeleteStudentClassRequest) writeField255(oprot thrift.TProtocol) (err error) {
+	if p.IsSetBase() {
+		if err = oprot.WriteFieldBegin("Base", thrift.STRUCT, 255); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Base.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 255 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 255 end error: ", p), err)
+}
+
+func (p *DeleteStudentClassRequest) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DeleteStudentClassRequest(%+v)", *p)
+
+}
+
+type DeleteStudentClassResponse struct {
+	BaseResp *base.BaseResp `thrift:"BaseResp,255,optional" form:"BaseResp" json:"BaseResp,omitempty" query:"BaseResp"`
+}
+
+func NewDeleteStudentClassResponse() *DeleteStudentClassResponse {
+	return &DeleteStudentClassResponse{}
+}
+
+func (p *DeleteStudentClassResponse) InitDefault() {
+}
+
+var DeleteStudentClassResponse_BaseResp_DEFAULT *base.BaseResp
+
+func (p *DeleteStudentClassResponse) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return DeleteStudentClassResponse_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+
+var fieldIDToName_DeleteStudentClassResponse = map[int16]string{
+	255: "BaseResp",
+}
+
+func (p *DeleteStudentClassResponse) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *DeleteStudentClassResponse) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 255:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField255(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_DeleteStudentClassResponse[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *DeleteStudentClassResponse) ReadField255(iprot thrift.TProtocol) error {
+	_field := base.NewBaseResp()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.BaseResp = _field
+	return nil
+}
+
+func (p *DeleteStudentClassResponse) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("DeleteStudentClassResponse"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField255(oprot); err != nil {
+			fieldId = 255
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *DeleteStudentClassResponse) writeField255(oprot thrift.TProtocol) (err error) {
+	if p.IsSetBaseResp() {
+		if err = oprot.WriteFieldBegin("BaseResp", thrift.STRUCT, 255); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.BaseResp.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 255 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 255 end error: ", p), err)
+}
+
+func (p *DeleteStudentClassResponse) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DeleteStudentClassResponse(%+v)", *p)
 
 }
 
@@ -7067,6 +7406,8 @@ type TeachingEvaluationService interface {
 	BatchCreateStudentClass(ctx context.Context, req *BatchCreateStudentClassRequest) (r *BatchCreateStudentClassResponse, err error)
 
 	QueryStudentClass(ctx context.Context, req *QueryStudentClassRequest) (r *QueryStudentClassResponse, err error)
+
+	DeleteStudentClass(ctx context.Context, req *DeleteStudentClassRequest) (r *DeleteStudentClassResponse, err error)
 	/** student   **/
 	CreateStudent(ctx context.Context, req *CreateStudentRequest) (r *CreateStudentResponse, err error)
 
@@ -7166,6 +7507,15 @@ func (p *TeachingEvaluationServiceClient) QueryStudentClass(ctx context.Context,
 	}
 	return _result.GetSuccess(), nil
 }
+func (p *TeachingEvaluationServiceClient) DeleteStudentClass(ctx context.Context, req *DeleteStudentClassRequest) (r *DeleteStudentClassResponse, err error) {
+	var _args TeachingEvaluationServiceDeleteStudentClassArgs
+	_args.Req = req
+	var _result TeachingEvaluationServiceDeleteStudentClassResult
+	if err = p.Client_().Call(ctx, "DeleteStudentClass", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
 func (p *TeachingEvaluationServiceClient) CreateStudent(ctx context.Context, req *CreateStudentRequest) (r *CreateStudentResponse, err error) {
 	var _args TeachingEvaluationServiceCreateStudentArgs
 	_args.Req = req
@@ -7230,6 +7580,7 @@ func NewTeachingEvaluationServiceProcessor(handler TeachingEvaluationService) *T
 	self.AddToProcessorMap("EditStudentClass", &teachingEvaluationServiceProcessorEditStudentClass{handler: handler})
 	self.AddToProcessorMap("BatchCreateStudentClass", &teachingEvaluationServiceProcessorBatchCreateStudentClass{handler: handler})
 	self.AddToProcessorMap("QueryStudentClass", &teachingEvaluationServiceProcessorQueryStudentClass{handler: handler})
+	self.AddToProcessorMap("DeleteStudentClass", &teachingEvaluationServiceProcessorDeleteStudentClass{handler: handler})
 	self.AddToProcessorMap("CreateStudent", &teachingEvaluationServiceProcessorCreateStudent{handler: handler})
 	self.AddToProcessorMap("BatchCreateStudent", &teachingEvaluationServiceProcessorBatchCreateStudent{handler: handler})
 	self.AddToProcessorMap("EditStudent", &teachingEvaluationServiceProcessorEditStudent{handler: handler})
@@ -7573,6 +7924,54 @@ func (p *teachingEvaluationServiceProcessorQueryStudentClass) Process(ctx contex
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("QueryStudentClass", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type teachingEvaluationServiceProcessorDeleteStudentClass struct {
+	handler TeachingEvaluationService
+}
+
+func (p *teachingEvaluationServiceProcessorDeleteStudentClass) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := TeachingEvaluationServiceDeleteStudentClassArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("DeleteStudentClass", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := TeachingEvaluationServiceDeleteStudentClassResult{}
+	var retval *DeleteStudentClassResponse
+	if retval, err2 = p.handler.DeleteStudentClass(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing DeleteStudentClass: "+err2.Error())
+		oprot.WriteMessageBegin("DeleteStudentClass", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("DeleteStudentClass", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -9823,6 +10222,298 @@ func (p *TeachingEvaluationServiceQueryStudentClassResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("TeachingEvaluationServiceQueryStudentClassResult(%+v)", *p)
+
+}
+
+type TeachingEvaluationServiceDeleteStudentClassArgs struct {
+	Req *DeleteStudentClassRequest `thrift:"req,1"`
+}
+
+func NewTeachingEvaluationServiceDeleteStudentClassArgs() *TeachingEvaluationServiceDeleteStudentClassArgs {
+	return &TeachingEvaluationServiceDeleteStudentClassArgs{}
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassArgs) InitDefault() {
+}
+
+var TeachingEvaluationServiceDeleteStudentClassArgs_Req_DEFAULT *DeleteStudentClassRequest
+
+func (p *TeachingEvaluationServiceDeleteStudentClassArgs) GetReq() (v *DeleteStudentClassRequest) {
+	if !p.IsSetReq() {
+		return TeachingEvaluationServiceDeleteStudentClassArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+var fieldIDToName_TeachingEvaluationServiceDeleteStudentClassArgs = map[int16]string{
+	1: "req",
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassArgs) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_TeachingEvaluationServiceDeleteStudentClassArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewDeleteStudentClassRequest()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Req = _field
+	return nil
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("DeleteStudentClass_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TeachingEvaluationServiceDeleteStudentClassArgs(%+v)", *p)
+
+}
+
+type TeachingEvaluationServiceDeleteStudentClassResult struct {
+	Success *DeleteStudentClassResponse `thrift:"success,0,optional"`
+}
+
+func NewTeachingEvaluationServiceDeleteStudentClassResult() *TeachingEvaluationServiceDeleteStudentClassResult {
+	return &TeachingEvaluationServiceDeleteStudentClassResult{}
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassResult) InitDefault() {
+}
+
+var TeachingEvaluationServiceDeleteStudentClassResult_Success_DEFAULT *DeleteStudentClassResponse
+
+func (p *TeachingEvaluationServiceDeleteStudentClassResult) GetSuccess() (v *DeleteStudentClassResponse) {
+	if !p.IsSetSuccess() {
+		return TeachingEvaluationServiceDeleteStudentClassResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+var fieldIDToName_TeachingEvaluationServiceDeleteStudentClassResult = map[int16]string{
+	0: "success",
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassResult) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_TeachingEvaluationServiceDeleteStudentClassResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewDeleteStudentClassResponse()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Success = _field
+	return nil
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("DeleteStudentClass_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *TeachingEvaluationServiceDeleteStudentClassResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TeachingEvaluationServiceDeleteStudentClassResult(%+v)", *p)
 
 }
 

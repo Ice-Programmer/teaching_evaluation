@@ -169,3 +169,19 @@ func buildClassCondition(db *gorm.DB, condition *eva.QueryClassCondition) *gorm.
 
 	return db
 }
+
+func DeleteStudentClass(ctx context.Context, db *gorm.DB, id int64) error {
+	if db == nil {
+		db = DB
+	}
+
+	err := db.Table(StudentClassTableName).WithContext(ctx).
+		Where("id = ?", id).
+		Updates(utils.GenerateDeleteMap()).
+		Error
+	if err != nil {
+		hlog.CtxErrorf(ctx, "BatchCreateListByNumber db failed: %v", err)
+		return err
+	}
+	return nil
+}

@@ -23,7 +23,7 @@ struct StudentClassCreateResponse {
 }
 
 struct StudentClassEditRequest {
-	1:   required i64       id             
+	1:   required string    id
 	2:            string    classNumber    
 	255: optional base.Base Base           
 }
@@ -43,16 +43,16 @@ struct BatchCreateStudentClassResponse {
 }
 
 struct QueryClassCondition {
-	1: optional i64       id             
+	1: optional string    id
 	2: optional string    classNumber    
 	3: optional list<i64> ids            
 }
 
 struct QueryStudentClassRequest {
 	1:   optional QueryClassCondition condition
-	2:            i32                 pageNum      
-	3:            i32                 pageSize     
-	255: optional base.Base           Base         
+	2:            i32                 pageNum
+	3:            i32                 pageSize
+	255: optional base.Base           Base
 }
 
 struct QueryStudentClassResponse {
@@ -62,9 +62,18 @@ struct QueryStudentClassResponse {
 }
 
 struct ClassInfo {
-	1:  i64    id             
+	1:  string id
 	2:  string classNumber    
 	3:  i64    createAt       
+}
+
+struct DeleteStudentClassRequest {
+	1:            string    id
+	255: optional base.Base Base
+}
+
+struct DeleteStudentClassResponse {
+	255: optional base.BaseResp BaseResp
 }
 
 /** student  **/
@@ -205,6 +214,7 @@ service TeachingEvaluationService {
     StudentClassEditResponse EditStudentClass(1: StudentClassEditRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/edit")
     BatchCreateStudentClassResponse BatchCreateStudentClass(1: BatchCreateStudentClassRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/create/batch")
     QueryStudentClassResponse QueryStudentClass(1: QueryStudentClassRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/query")
+    DeleteStudentClassResponse DeleteStudentClass(1: DeleteStudentClassRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/class/delete")
 
     /** student   **/
     CreateStudentResponse CreateStudent(1: CreateStudentRequest req) (api.post="/api/v1/itmo/teaching/evaluation/admin/student/create")
